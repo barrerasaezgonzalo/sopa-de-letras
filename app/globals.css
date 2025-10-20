@@ -1,26 +1,124 @@
-@import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    background-color: #3AAEAB;
+}
+
+.contenedor {
+    min-height: 100vh;
+    font-family: monospace;
+    color: white;
+}
+
+.main {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.main h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    background: #2B7A77;
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.search {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    max-width: 900px
+}
+
+.search input {
+    flex: 1;
+    padding: 1rem 1.5rem;
+    font-size: 1.125rem;
+    height: 20px;
+    border: 1px solid #171717;
+    border-radius: 0.5rem;
+    outline: 'none';
+    max-width: 300px;
+}
+
+.search button {
+    padding: 0 1.5rem;
+    height: 53px;
+    font-size: 1.125rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    background-color: #182329;
+    border: 1px solid #182329;
+    color: white;
+    cursor: pointer;
+    border: 'none';
+}
+
+.search button:disabled {
+    background-color: #182329;
+    color: #fff;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.grid {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.grid .blocks {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    padding: 1.5rem;
+    overflow-x: auto;
+    color: #171717
+}
+.grid .blocks .letter{
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #d1d5db;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    user-select: none;
+}
+.flex{
+    display: flex;
+}
+
+.words-container{
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    padding: 1rem;
+    min-width: 300px;
+    max-width: 300px;
+}
+.words-container h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #171717;
+    margin-bottom: 1rem;
+}
+
+.words-container .word {
+    padding: 0.85rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+.words-container .footer{
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e5e7eb
+}
+.words-container .footer p{
+    font-size: 0.875rem; 
+    color: #4b5563;
 }
