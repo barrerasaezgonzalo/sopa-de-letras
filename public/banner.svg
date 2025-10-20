@@ -1,0 +1,106 @@
+<svg width="1200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fondo con gradiente -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3AAEAB;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#2d8a87;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1f6865;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Filtro de sombra para el texto -->
+    <filter id="textShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="10"/>
+      <feOffset dx="0" dy="5" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.5"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Rectángulo de fondo con gradiente y esquinas redondeadas -->
+  <rect width="1200" height="200" rx="16" fill="url(#bgGradient)"/>
+  
+  <!-- Cuadrícula de fondo -->
+  <g opacity="0.08" stroke="white" stroke-width="2" fill="none">
+    <!-- Líneas verticales -->
+    <line x1="40" y1="0" x2="40" y2="200"/>
+    <line x1="80" y1="0" x2="80" y2="200"/>
+    <line x1="120" y1="0" x2="120" y2="200"/>
+    <line x1="160" y1="0" x2="160" y2="200"/>
+    <line x1="200" y1="0" x2="200" y2="200"/>
+    <line x1="240" y1="0" x2="240" y2="200"/>
+    <line x1="280" y1="0" x2="280" y2="200"/>
+    <line x1="320" y1="0" x2="320" y2="200"/>
+    <line x1="360" y1="0" x2="360" y2="200"/>
+    <line x1="400" y1="0" x2="400" y2="200"/>
+    <line x1="440" y1="0" x2="440" y2="200"/>
+    <line x1="480" y1="0" x2="480" y2="200"/>
+    <line x1="520" y1="0" x2="520" y2="200"/>
+    <line x1="560" y1="0" x2="560" y2="200"/>
+    <line x1="600" y1="0" x2="600" y2="200"/>
+    <line x1="640" y1="0" x2="640" y2="200"/>
+    <line x1="680" y1="0" x2="680" y2="200"/>
+    <line x1="720" y1="0" x2="720" y2="200"/>
+    <line x1="760" y1="0" x2="760" y2="200"/>
+    <line x1="800" y1="0" x2="800" y2="200"/>
+    <line x1="840" y1="0" x2="840" y2="200"/>
+    <line x1="880" y1="0" x2="880" y2="200"/>
+    <line x1="920" y1="0" x2="920" y2="200"/>
+    <line x1="960" y1="0" x2="960" y2="200"/>
+    <line x1="1000" y1="0" x2="1000" y2="200"/>
+    <line x1="1040" y1="0" x2="1040" y2="200"/>
+    <line x1="1080" y1="0" x2="1080" y2="200"/>
+    <line x1="1120" y1="0" x2="1120" y2="200"/>
+    <line x1="1160" y1="0" x2="1160" y2="200"/>
+    
+    <!-- Líneas horizontales -->
+    <line x1="0" y1="40" x2="1200" y2="40"/>
+    <line x1="0" y1="80" x2="1200" y2="80"/>
+    <line x1="0" y1="120" x2="1200" y2="120"/>
+    <line x1="0" y1="160" x2="1200" y2="160"/>
+  </g>
+  
+  <!-- Letras de fondo decorativas -->
+  <g opacity="0.1" fill="white" font-family="Courier New, monospace" font-weight="bold" font-size="120">
+    <text x="50" y="120" transform="rotate(-5 50 120)">A</text>
+    <text x="200" y="140" transform="rotate(5 200 140)" font-size="100">S</text>
+    <text x="350" y="110" transform="rotate(-3 350 110)">O</text>
+    <text x="500" y="145" transform="rotate(4 500 145)" font-size="110">P</text>
+    <text x="650" y="130" transform="rotate(-4 650 130)">A</text>
+    <text x="800" y="105" transform="rotate(6 800 105)" font-size="95">L</text>
+    <text x="950" y="145" transform="rotate(-6 950 145)">E</text>
+    <text x="1100" y="125" transform="rotate(3 1100 125)" font-size="105">T</text>
+  </g>
+  
+  <!-- Título principal -->
+  <text 
+    x="600" 
+    y="85" 
+    font-family="Arial Black, sans-serif" 
+    font-size="72" 
+    font-weight="900" 
+    fill="white" 
+    text-anchor="middle"
+    filter="url(#textShadow)"
+    letter-spacing="4">
+    SOPA DE LETRAS
+  </text>
+  
+  <!-- Subtítulo -->
+  <text 
+    x="600" 
+    y="145" 
+    font-family="Arial, sans-serif" 
+    font-size="24" 
+    font-weight="bold" 
+    fill="rgba(255, 255, 255, 0.95)" 
+    text-anchor="middle"
+    filter="url(#textShadow)"
+    letter-spacing="6">
+    🎯 ENCUENTRA TODAS LAS PALABRAS
+  </text>
+</svg>

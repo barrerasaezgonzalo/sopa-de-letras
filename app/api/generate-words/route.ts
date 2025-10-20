@@ -8,9 +8,11 @@ const client = new Groq({
 export async function POST(req: NextRequest) {
   try {
     const { topic } = await req.json();
-    if (!topic) {
+
+    // Validación del topic
+    if (!topic || typeof topic !== "string" || topic.trim().length === 0) {
       return NextResponse.json(
-        { error: "Debe proporcionar un tema" },
+        { error: "Debe proporcionar un tema válido" },
         { status: 400 },
       );
     }
@@ -18,42 +20,60 @@ export async function POST(req: NextRequest) {
     const completion = await client.chat.completions.create({
       messages: [
         {
+          role: "system",
+          content:
+            "Eres un asistente que genera exactamente 10 palabras relacionadas con un tema. Solo respondes con palabras separadas por comas, sin números, sin puntos, sin explicaciones.",
+        },
+        {
           role: "user",
-          content: `Genera exactamente 10 palabras relacionadas con el tema: "${topic}". 
-        Responde SOLAMENTE con las palabras separadas por comas, sin números, sin guiones, sin explicaciones.
-        Ejemplo de respuesta: perro, gato, elefante, león, tigre, jirafa, cebra, mono, oso, águila`,
+          content: `Tema: "${topic}". Genera 10 palabras relacionadas.`,
         },
       ],
-      model: "llama-3.3-70b-versatile", // Cambiado a un modelo más confiable
-      temperature: 0.8,
+      model: "llama-3.3-70b-versatile",
+      temperature: 0.7, // Bajado un poco para respuestas más consistentes
+      max_tokens: 100, // Limitar tokens para respuestas más cortas
     });
 
     const text = completion.choices[0]?.message?.content || "";
-    console.log("Respuesta de la API:", text); // Para debugging
+    console.log("Respuesta de la API:", text);
 
     // Limpiar y procesar las palabras
     const words = text
-      .split(/[,\n]/) // Separar por comas o saltos de línea
-      .map((word) => word.trim().replace(/^\d+[\.\-\)]\s*/, "")) // Remover números al inicio
-      .filter((word) => word.length > 2 && word.length < 15) // Filtrar palabras muy cortas o largas
-      .slice(0, 10); // Tomar máximo 10 palabras
+      .split(/[,\n;]/) // Separar por comas, saltos de línea o punto y coma
+      .map((word) =>
+        word
+          .trim()
+          .replace(/^\d+[\.\-\)]\s*/, "") // Remover números al inicio
+          .replace(/[^\wáéíóúñü]/gi, "") // Remover caracteres especiales, mantener acentos
+          .toLowerCase(),
+      )
+      .filter((word) => word.length >= 3 && word.length <= 12) // Palabras entre 3 y 12 caracteres
+      .filter((word, index, self) => self.indexOf(word) === index) // Remover duplicados
+      .slice(0, 10); // Máximo 10 palabras
 
-    console.log("Palabras procesadas:", words); // Para debugging
+    console.log("Palabras procesadas:", words);
 
-    if (words.length === 0) {
+    if (words.length < 5) {
+      // Al menos 5 palabras para que sea jugable
       return NextResponse.json(
-        { error: "No se generaron palabras válidas" },
+        {
+          error:
+            "No se generaron suficientes palabras válidas. Intenta con otro tema.",
+        },
         { status: 500 },
       );
     }
 
     return NextResponse.json({ words });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("Error generando palabras:", err);
-    return NextResponse.json(
-      { error: err.message || "Error generando palabras" },
-      { status: 500 },
-    );
+
+    // Mejor manejo de errores
+    const errorMessage =
+      err instanceof Error
+        ? err.message
+        : "Error desconocido al generar palabras";
+
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

@@ -1,39 +1,44 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { handleGenerate } from './utils';
-import Input from '@/components/Input';
-import Grid from '@/components/Grid';
+import { useCallback, useState } from "react";
+import { handleGenerate } from "./utils";
+import Input from "@/components/Input";
+import Grid from "@/components/Grid";
+import Banner from "@/components/header";
 
 export default function WordSearchPage() {
-  const [topic, setTopic] = useState('');
+  const [topic, setTopic] = useState("");
   const [grid, setGrid] = useState<string[][]>([]);
   const [words, setWords] = useState<string[]>([]);
-  const [wordPositions, setWordPositions] = useState<Map<string, string[]>>(new Map());
+  const [wordPositions, setWordPositions] = useState<Map<string, string[]>>(
+    new Map(),
+  );
   const [foundWords, setFoundWords] = useState<Set<string>>(new Set());
   const [, setFoundCells] = useState<Set<string>>(new Set());
   const [, setSelectedCells] = useState<Set<string>>(new Set());
   const [loading, setLoading] = useState(false);
 
+  const onGenerate = useCallback(() => {
+    handleGenerate(
+      topic,
+      setLoading,
+      setWords,
+      setWordPositions,
+      setGrid,
+      setFoundCells,
+      setFoundWords,
+      setSelectedCells,
+    );
+  }, [topic]);
+
   return (
     <div className="contenedor">
       <div className="main">
-
-        <h1>🥣 SOPA DE LETRAS</h1>
-
+        <Banner />
         <Input
           topic={topic}
           setTopic={setTopic}
-          handleGenerate={() => handleGenerate(
-            topic,
-            setLoading,
-            setWords,
-            setWordPositions,
-            setGrid,
-            setFoundCells,
-            setFoundWords,
-            setSelectedCells
-          )}
+          handleGenerate={onGenerate}
           loading={loading}
         />
 
@@ -44,7 +49,6 @@ export default function WordSearchPage() {
           wordPositions={wordPositions}
           setFoundWords={setFoundWords}
         />
-
       </div>
     </div>
   );
