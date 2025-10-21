@@ -129,8 +129,8 @@ body {
   gap: 2rem;
   align-items: flex-start;
   flex-wrap: wrap;
-   max-width: 1025px;
-   justify-content: space-between;
+  max-width: 1025px;
+  justify-content: space-between;
 }
 
 .grid .blocks {
@@ -144,7 +144,7 @@ body {
   /* ✅ QUITAR touch-action: pan-y */
 }
 
-.grid .blocks>div {
+.grid .blocks > div {
   /* ✅ QUITAR touch-action: none */
 }
 
@@ -173,7 +173,7 @@ body {
    CONTENEDOR DE PALABRAS
    ============================================ */
 
-.words-container {   
+.words-container {
   background-color: white;
   border-radius: 0.5rem;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
@@ -233,8 +233,7 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-wrap: wrap;
-  color: #171717;                                               
-  ;
+  color: #171717;
 }
 
 .timer-current,
@@ -243,7 +242,6 @@ body {
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem;
-  
 }
 
 .timer-icon {
@@ -274,7 +272,7 @@ body {
   bottom: 2rem;
   right: 2rem;
   padding: 1rem 1.5rem;
-  background: #3aaeab;
+  background: #2376a3;
   color: white;
   border: none;
   border-radius: 2rem;
@@ -283,13 +281,13 @@ body {
   box-shadow: 0 4px 12px rgba(58, 174, 171, 0.4);
   z-index: 1000;
   transition: all 0.3s;
+  text-align: center;
 }
 
 .install-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(58, 174, 171, 0.6);
 }
-
 
 * {
   /* border:1px solid red; */

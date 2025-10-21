@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { handleGenerate } from "./utils";
 import Input from "@/components/Input";
 import Grid from "@/components/Grid";
@@ -43,12 +43,8 @@ export default function WordSearchPage() {
           handleGenerate={onGenerate}
           loading={loading}
         />
-        
-        <Timmer 
-          grid={grid}  
-          words={words} 
-          foundWords={foundWords}
-        />
+
+        <Timmer grid={grid} words={words} foundWords={foundWords} />
 
         <Grid
           grid={grid}
@@ -57,8 +53,8 @@ export default function WordSearchPage() {
           wordPositions={wordPositions}
           setFoundWords={setFoundWords}
         />
+        <InstallPrompt />
       </div>
-      <InstallPrompt />
     </div>
   );
 }

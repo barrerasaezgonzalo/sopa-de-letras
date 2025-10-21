@@ -13,9 +13,10 @@ export default function Grid({
   setFoundWords,
 }: GridProps) {
   const [isSelecting, setIsSelecting] = useState(false);
-  const [startCell, setStartCell] = useState<{ row: number; col: number } | null>(
-    null
-  );
+  const [startCell, setStartCell] = useState<{
+    row: number;
+    col: number;
+  } | null>(null);
   const [selectedCells, setSelectedCells] = useState<Set<string>>(new Set());
   const [foundCells, setFoundCells] = useState<Set<string>>(new Set());
 
@@ -37,11 +38,16 @@ export default function Grid({
   const updateSelection = useCallback(
     (row: number, col: number) => {
       if (isSelecting && startCell) {
-        const cellsInLine = getCellsInLine(startCell.row, startCell.col, row, col);
+        const cellsInLine = getCellsInLine(
+          startCell.row,
+          startCell.col,
+          row,
+          col,
+        );
         setSelectedCells(new Set(cellsInLine));
       }
     },
-    [isSelecting, startCell]
+    [isSelecting, startCell],
   );
 
   const endSelection = useCallback(() => {
@@ -58,14 +64,25 @@ export default function Grid({
       setStartCell(null);
       setSelectedCells(new Set());
     }
-  }, [isSelecting, selectedCells, words, wordPositions, foundWords, setFoundWords]);
+  }, [
+    isSelecting,
+    selectedCells,
+    words,
+    wordPositions,
+    foundWords,
+    setFoundWords,
+  ]);
 
   if (grid.length === 0) return null;
 
   // ==== Render ====
   return (
     <div className="grid">
-      <div className="blocks" onMouseUp={endSelection} onMouseLeave={endSelection}>
+      <div
+        className="blocks"
+        onMouseUp={endSelection}
+        onMouseLeave={endSelection}
+      >
         {grid.map((row, i) => (
           <div key={i} className="flex">
             {row.map((cell, j) => {
@@ -91,12 +108,12 @@ export default function Grid({
                     const touch = e.touches[0];
                     const element = document.elementFromPoint(
                       touch.clientX,
-                      touch.clientY
+                      touch.clientY,
                     ) as HTMLElement | null;
                     if (element?.dataset?.row && element?.dataset?.col) {
                       updateSelection(
                         parseInt(element.dataset.row),
-                        parseInt(element.dataset.col)
+                        parseInt(element.dataset.col),
                       );
                     }
                   }}
@@ -126,7 +143,9 @@ export default function Grid({
       {/* Lista de palabras */}
       <div className="words-container">
         <h2>Palabras a encontrar</h2>
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+        <div
+          style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
+        >
           {words.map((word, idx) => (
             <div
               key={idx}

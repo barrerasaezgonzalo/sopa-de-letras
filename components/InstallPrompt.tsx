@@ -1,10 +1,18 @@
 // components/InstallPrompt.tsx
 "use client";
 
+import { BeforeInstallPromptEvent } from "@/app/types";
 import { useEffect, useState } from "react";
 
+declare global {
+  interface WindowEventMap {
+    beforeinstallprompt: BeforeInstallPromptEvent;
+  }
+}
+
 export default function InstallPrompt() {
-  const [installPrompt, setInstallPrompt] = useState<any>(null);
+  const [installPrompt, setInstallPrompt] =
+    useState<BeforeInstallPromptEvent | null>(null);
   const [isInstalled, setIsInstalled] = useState(false);
 
   useEffect(() => {
@@ -14,7 +22,7 @@ export default function InstallPrompt() {
     }
 
     // Capturar el evento de instalación
-    const handler = (e: Event) => {
+    const handler = (e: BeforeInstallPromptEvent) => {
       e.preventDefault();
       setInstallPrompt(e);
     };

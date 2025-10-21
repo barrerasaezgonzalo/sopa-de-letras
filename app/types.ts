@@ -41,9 +41,16 @@ export interface CheckWordProps {
   setFoundCells: React.Dispatch<React.SetStateAction<Set<string>>>; // ✅ Corregido: Set<string> en lugar de Set<objeto>
 }
 
-
 export interface TimmerProps {
   grid: string[][];
   words: string[];
   foundWords: Set<string>;
+}
+
+export interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{
+    outcome: "accepted" | "dismissed";
+    platform: string;
+  }>;
 }
