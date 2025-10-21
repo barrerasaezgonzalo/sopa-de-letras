@@ -12,24 +12,13 @@ export default function Grid({
   wordPositions,
   setFoundWords,
 }: GridProps) {
-  /* ============================================
-     ESTADOS
-     ============================================ */
   const [isSelecting, setIsSelecting] = useState(false);
-  const [startCell, setStartCell] = useState<{
-    row: number;
-    col: number;
-  } | null>(null);
+  const [startCell, setStartCell] = useState<{ row: number; col: number } | null>(
+    null
+  );
   const [selectedCells, setSelectedCells] = useState<Set<string>>(new Set());
   const [foundCells, setFoundCells] = useState<Set<string>>(new Set());
 
-  /* ============================================
-     EFECTOS
-     ============================================ */
-
-  /**
-   * Resetea los estados cuando cambia la grilla (nueva partida)
-   */
   useEffect(() => {
     setFoundCells(new Set());
     setSelectedCells(new Set());
@@ -37,41 +26,25 @@ export default function Grid({
     setStartCell(null);
   }, [grid]);
 
-  /* ============================================
-     HANDLERS DE INTERACCIÓN
-     ============================================ */
+  // ==== Handlers comunes (funcionan para mouse y touch) ====
 
-  /**
-   * Inicia la selección de celdas al hacer click
-   */
-  const handleMouseDown = useCallback((row: number, col: number) => {
+  const startSelection = useCallback((row: number, col: number) => {
     setIsSelecting(true);
     setStartCell({ row, col });
     setSelectedCells(new Set([getCellKey(row, col)]));
   }, []);
 
-  /**
-   * Actualiza la selección mientras el mouse se mueve
-   */
-  const handleMouseEnter = useCallback(
+  const updateSelection = useCallback(
     (row: number, col: number) => {
       if (isSelecting && startCell) {
-        const cellsInLine = getCellsInLine(
-          startCell.row,
-          startCell.col,
-          row,
-          col,
-        );
+        const cellsInLine = getCellsInLine(startCell.row, startCell.col, row, col);
         setSelectedCells(new Set(cellsInLine));
       }
     },
-    [isSelecting, startCell],
+    [isSelecting, startCell]
   );
 
-  /**
-   * Finaliza la selección y verifica si se encontró una palabra
-   */
-  const handleMouseUp = useCallback(() => {
+  const endSelection = useCallback(() => {
     if (isSelecting) {
       checkWord({
         selectedCells,
@@ -85,108 +58,93 @@ export default function Grid({
       setStartCell(null);
       setSelectedCells(new Set());
     }
-  }, [
-    isSelecting,
-    selectedCells,
-    words,
-    wordPositions,
-    foundWords,
-    setFoundWords,
-  ]);
+  }, [isSelecting, selectedCells, words, wordPositions, foundWords, setFoundWords]);
 
-  /* ============================================
-     RENDERIZADO CONDICIONAL
-     ============================================ */
+  if (grid.length === 0) return null;
 
-  // No renderizar nada si no hay grilla
-  if (grid.length === 0) {
-    return null;
-  }
-
-  /* ============================================
-     RENDERIZADO PRINCIPAL
-     ============================================ */
-
+  // ==== Render ====
   return (
     <div className="grid">
-      {/* Grilla de letras */}
-      <div className="blocks">
-        <div onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp}>
-          {grid.map((row, i) => (
-            <div key={i} className="flex">
-              {row.map((cell, j) => {
-                const cellKey = getCellKey(i, j);
-                const isSelected = selectedCells.has(cellKey);
-                const isFound = foundCells.has(cellKey);
+      <div className="blocks" onMouseUp={endSelection} onMouseLeave={endSelection}>
+        {grid.map((row, i) => (
+          <div key={i} className="flex">
+            {row.map((cell, j) => {
+              const cellKey = getCellKey(i, j);
+              const isSelected = selectedCells.has(cellKey);
+              const isFound = foundCells.has(cellKey);
 
-                // Determinar color de fondo
-                let bgColor = CELL_COLORS.DEFAULT;
-                if (isFound) {
-                  bgColor = CELL_COLORS.FOUND;
-                } else if (isSelected) {
-                  bgColor = CELL_COLORS.SELECTED;
-                }
+              let bgColor = CELL_COLORS.DEFAULT;
+              if (isFound) bgColor = CELL_COLORS.FOUND;
+              else if (isSelected) bgColor = CELL_COLORS.SELECTED;
 
-                return (
-                  <div
-                    key={j}
-                    className="letter"
-                    onMouseDown={() => handleMouseDown(i, j)}
-                    onMouseEnter={() => handleMouseEnter(i, j)}
-                    style={{ backgroundColor: bgColor }}
-                    onMouseOver={(e) => {
-                      if (!isSelected && !isFound) {
-                        e.currentTarget.style.backgroundColor = "#f3f4f6";
-                      }
-                    }}
-                    onMouseOut={(e) => {
-                      if (!isSelected && !isFound) {
-                        e.currentTarget.style.backgroundColor = bgColor;
-                      }
-                    }}
-                  >
-                    {cell}
-                  </div>
-                );
-              })}
-            </div>
-          ))}
-        </div>
+              return (
+                <div
+                  key={j}
+                  className="letter select-none touch-none"
+                  style={{ backgroundColor: bgColor }}
+                  // 🖱️ Eventos de mouse
+                  onMouseDown={() => startSelection(i, j)}
+                  onMouseEnter={() => updateSelection(i, j)}
+                  // 📱 Eventos de touch (para móviles)
+                  onTouchStart={() => startSelection(i, j)}
+                  onTouchMove={(e) => {
+                    const touch = e.touches[0];
+                    const element = document.elementFromPoint(
+                      touch.clientX,
+                      touch.clientY
+                    ) as HTMLElement | null;
+                    if (element?.dataset?.row && element?.dataset?.col) {
+                      updateSelection(
+                        parseInt(element.dataset.row),
+                        parseInt(element.dataset.col)
+                      );
+                    }
+                  }}
+                  onTouchEnd={endSelection}
+                  // dataset para reconocer posición al mover el dedo
+                  data-row={i}
+                  data-col={j}
+                  onMouseOver={(e) => {
+                    if (!isSelected && !isFound) {
+                      e.currentTarget.style.backgroundColor = "#f3f4f6";
+                    }
+                  }}
+                  onMouseOut={(e) => {
+                    if (!isSelected && !isFound) {
+                      e.currentTarget.style.backgroundColor = bgColor;
+                    }
+                  }}
+                >
+                  {cell}
+                </div>
+              );
+            })}
+          </div>
+        ))}
       </div>
 
       {/* Lista de palabras */}
       <div className="words-container">
         <h2>Palabras a encontrar</h2>
-
-        <div
-          style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
-        >
-          {words.map((word, idx) => {
-            const isWordFound = foundWords.has(word);
-
-            return (
-              <div
-                key={idx}
-                className="word"
-                style={{
-                  backgroundColor: foundWords.has(word)
-                    ? WORD_COLORS.FOUND_BG
-                    : WORD_COLORS.DEFAULT_BG,
-                  color: foundWords.has(word)
-                    ? WORD_COLORS.FOUND_TEXT
-                    : WORD_COLORS.DEFAULT_TEXT,
-                  textDecoration: foundWords.has(word)
-                    ? "line-through"
-                    : "none",
-                }}
-              >
-                {word}
-              </div>
-            );
-          })}
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+          {words.map((word, idx) => (
+            <div
+              key={idx}
+              className="word"
+              style={{
+                backgroundColor: foundWords.has(word)
+                  ? WORD_COLORS.FOUND_BG
+                  : WORD_COLORS.DEFAULT_BG,
+                color: foundWords.has(word)
+                  ? WORD_COLORS.FOUND_TEXT
+                  : WORD_COLORS.DEFAULT_TEXT,
+                textDecoration: foundWords.has(word) ? "line-through" : "none",
+              }}
+            >
+              {word}
+            </div>
+          ))}
         </div>
-
-        {/* Footer con contador */}
         <div className="footer">
           <p>
             Encontradas: <span>{foundWords.size}</span> / {words.length}
