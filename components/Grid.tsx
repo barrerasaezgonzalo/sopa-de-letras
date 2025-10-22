@@ -2,7 +2,7 @@
 
 import { GridProps } from "@/app/types";
 import { checkWord, getCellKey, getCellsInLine } from "@/app/utils";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { CELL_COLORS, WORD_COLORS } from "@/app/contants";
 
 export default function Grid({
@@ -19,6 +19,7 @@ export default function Grid({
   } | null>(null);
   const [selectedCells, setSelectedCells] = useState<Set<string>>(new Set());
   const [foundCells, setFoundCells] = useState<Set<string>>(new Set());
+  const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setFoundCells(new Set());
@@ -26,6 +27,28 @@ export default function Grid({
     setIsSelecting(false);
     setStartCell(null);
   }, [grid]);
+
+  // 🔥 Prevenir scroll durante la selección
+  useEffect(() => {
+    const preventScroll = (e: TouchEvent) => {
+      if (isSelecting) {
+        e.preventDefault();
+      }
+    };
+
+    const gridElement = gridRef.current;
+    if (gridElement) {
+      gridElement.addEventListener("touchmove", preventScroll, {
+        passive: false,
+      });
+    }
+
+    return () => {
+      if (gridElement) {
+        gridElement.removeEventListener("touchmove", preventScroll);
+      }
+    };
+  }, [isSelecting]);
 
   // ==== Handlers comunes (funcionan para mouse y touch) ====
 
@@ -79,16 +102,11 @@ export default function Grid({
   return (
     <div className="grid">
       <div
+        ref={gridRef}
         className="blocks"
         onMouseUp={endSelection}
         onMouseLeave={endSelection}
-        // 🔥 Prevenir scroll en touch
-        onTouchMove={(e) => {
-          if (isSelecting) {
-            e.preventDefault();
-          }
-        }}
-        style={{ touchAction: isSelecting ? "none" : "auto" }}
+        style={{ touchAction: "none" }} // 🔥 Deshabilitar todas las acciones táctiles nativas
       >
         {grid.map((row, i) => (
           <div key={i} className="flex">
@@ -104,18 +122,19 @@ export default function Grid({
               return (
                 <div
                   key={j}
-                  className="letter select-none touch-none"
-                  style={{ backgroundColor: bgColor }}
+                  className="letter select-none"
+                  style={{
+                    backgroundColor: bgColor,
+                    touchAction: "none", // 🔥 También en cada celda
+                  }}
                   // 🖱️ Eventos de mouse
                   onMouseDown={() => startSelection(i, j)}
                   onMouseEnter={() => updateSelection(i, j)}
                   // 📱 Eventos de touch (para móviles)
                   onTouchStart={(e) => {
-                    e.preventDefault(); // 🔥 Prevenir comportamiento por defecto
                     startSelection(i, j);
                   }}
                   onTouchMove={(e) => {
-                    e.preventDefault(); // 🔥 Prevenir scroll
                     const touch = e.touches[0];
                     const element = document.elementFromPoint(
                       touch.clientX,
@@ -128,10 +147,7 @@ export default function Grid({
                       );
                     }
                   }}
-                  onTouchEnd={(e) => {
-                    e.preventDefault(); // 🔥 Prevenir comportamiento por defecto
-                    endSelection();
-                  }}
+                  onTouchEnd={endSelection}
                   // dataset para reconocer posición al mover el dedo
                   data-row={i}
                   data-col={j}
