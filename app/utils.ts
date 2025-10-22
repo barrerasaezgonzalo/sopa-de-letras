@@ -137,7 +137,7 @@ export const checkWord = ({
   foundWords,
   setFoundWords,
   setFoundCells,
-}: CheckWordProps): void => {
+}: CheckWordProps): boolean => {
   const selectedArray = Array.from(selectedCells).sort();
   let shouldCelebrate = false;
 
@@ -167,12 +167,7 @@ export const checkWord = ({
     }
   });
 
-  // Mostrar felicitación si completó todas las palabras
-  if (shouldCelebrate) {
-    setTimeout(() => {
-      alert("🎉 ¡Felicitaciones! ¡Has encontrado todas las palabras! 🎊");
-    }, 300);
-  }
+  return shouldCelebrate;
 };
 
 /* ============================================

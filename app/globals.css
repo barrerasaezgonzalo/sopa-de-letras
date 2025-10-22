@@ -48,7 +48,7 @@ body {
 .search input,
 .search-input {
   flex: 1;
-  padding: 1rem 1.5rem;
+  padding: 0.5rem;
   font-size: 1.125rem;
   border: 2px solid #182329;
   border-radius: 0.5rem;
@@ -126,11 +126,18 @@ body {
 
 .grid {
   display: flex;
-  gap: 2rem;
-  align-items: flex-start;
-  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
   max-width: 1025px;
-  justify-content: space-between;
+  flex-direction: row;
+}
+
+@media (max-width: 1022px) {
+  .grid {
+    flex-direction: column;
+    margin-right: 3rem;
+    width: 100%;
+  }
 }
 
 .grid .blocks {
@@ -141,7 +148,13 @@ body {
   overflow-x: auto;
   color: #171717;
   -webkit-overflow-scrolling: touch;
+  width: 100%;
   /* ✅ QUITAR touch-action: pan-y */
+}
+@media (max-width: 1022px) {
+  .grid .blocks {
+    width: auto;
+  }
 }
 
 .grid .blocks > div {
@@ -149,7 +162,7 @@ body {
 }
 
 .grid .blocks .letter {
-  width: 40px;
+  width: 100%;
   height: 40px;
   display: flex;
   align-items: center;
@@ -180,11 +193,16 @@ body {
   padding: 1rem;
   box-sizing: border-box;
   max-width: 1025px;
-  width: auto;
+  width: 100%;
 }
 @media (max-width: 1022px) {
   .words-container {
-    width: 100%;
+    max-width: 100%;
+  }
+  .words-container > div {
+    flex-direction: row !important;
+    gap: 0.5rem;
+    flex-wrap: wrap;
   }
 }
 
@@ -291,4 +309,171 @@ body {
 
 * {
   /* border:1px solid red; */
+}
+
+.win-toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  animation:
+    slideInRight 0.5s ease,
+    wiggle 0.8s ease 0.5s;
+  z-index: 1000;
+}
+
+.win-emoji {
+  font-size: 3rem;
+  animation: spin 1s ease infinite;
+}
+
+.win-toast strong {
+  font-size: 1.3rem;
+  display: block;
+}
+
+.win-toast p {
+  margin: 0.2rem 0 0 0;
+  opacity: 0.9;
+}
+
+.win-toast button {
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  color: white;
+  padding: 0.5rem 0.7rem;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: background 0.2s;
+}
+
+.win-toast button:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-5deg);
+  }
+  75% {
+    transform: rotate(5deg);
+  }
+}
+
+@keyframes spin {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(15deg);
+  }
+}
+
+.win-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+  padding: 1rem; /* 👈 Padding para mobile */
+}
+
+.win-modal {
+  background: #2b7a77;
+  padding: 3rem 2rem;
+  border-radius: 20px;
+  text-align: center;
+  position: relative;
+  max-width: 400px;
+  width: 90%; /* 👈 Ancho responsive */
+  animation: slideUp 0.5s ease;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.win-modal h1 {
+  font-size: 2.5rem;
+  color: white;
+  margin: 0 0 1rem 0;
+  animation: bounce 0.6s ease infinite alternate;
+}
+
+.win-modal p {
+  color: white;
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+}
+
+.win-button {
+  background: white;
+  color: #171717;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-top: 1.5rem;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+.win-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.win-button:active {
+  transform: scale(0.98);
+}
+
+/* 👇 Media query para mobile */
+@media (max-width: 768px) {
+  .win-modal {
+    padding: 2rem 1.5rem;
+    width: 95%;
+  }
+
+  .win-modal h1 {
+    font-size: 2rem;
+  }
+
+  .win-modal p {
+    font-size: 1rem;
+  }
+
+  .win-button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
 }

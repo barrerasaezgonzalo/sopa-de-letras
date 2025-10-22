@@ -19,6 +19,7 @@ export default function Grid({
   } | null>(null);
   const [selectedCells, setSelectedCells] = useState<Set<string>>(new Set());
   const [foundCells, setFoundCells] = useState<Set<string>>(new Set());
+  const [showWinModal, setShowWinModal] = useState(false);
   const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -75,7 +76,7 @@ export default function Grid({
 
   const endSelection = useCallback(() => {
     if (isSelecting) {
-      checkWord({
+      const won = checkWord({
         selectedCells,
         words,
         wordPositions,
@@ -83,6 +84,13 @@ export default function Grid({
         setFoundWords,
         setFoundCells,
       });
+
+      if (won) {
+        setTimeout(() => {
+          setShowWinModal(true);
+        }, 300);
+      }
+
       setIsSelecting(false);
       setStartCell(null);
       setSelectedCells(new Set());
@@ -200,6 +208,28 @@ export default function Grid({
           </p>
         </div>
       </div>
+      {showWinModal && (
+        <div
+          className="win-modal-overlay"
+          onClick={() => setShowWinModal(false)}
+        >
+          <div className="win-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="confetti">
+              {[...Array(50)].map((_, i) => (
+                <div key={i} className="confetti-piece" />
+              ))}
+            </div>
+            <h1>🎉 ¡Felicidades! 🎉</h1>
+            <p>¡Encontraste todas las palabras!</p>
+            <button
+              onClick={() => setShowWinModal(false)}
+              className="win-button"
+            >
+              ¡Genial!
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

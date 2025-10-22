@@ -38,7 +38,7 @@ export interface CheckWordProps {
   wordPositions: Map<string, string[]>;
   foundWords: Set<string>;
   setFoundWords: React.Dispatch<React.SetStateAction<Set<string>>>;
-  setFoundCells: React.Dispatch<React.SetStateAction<Set<string>>>; // ✅ Corregido: Set<string> en lugar de Set<objeto>
+  setFoundCells: React.Dispatch<React.SetStateAction<Set<string>>>;
 }
 
 export interface TimmerProps {

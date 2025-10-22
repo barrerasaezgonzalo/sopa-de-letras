@@ -24,7 +24,7 @@ export default function Input({
         disabled={loading}
       />
       <button onClick={handleGenerate} disabled={loading || !topic.trim()}>
-        {loading ? ".." : "🎲"}
+        {loading ? ".." : "📝"}
       </button>
     </div>
   );
