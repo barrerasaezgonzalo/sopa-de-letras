@@ -82,6 +82,13 @@ export default function Grid({
         className="blocks"
         onMouseUp={endSelection}
         onMouseLeave={endSelection}
+        // 🔥 Prevenir scroll en touch
+        onTouchMove={(e) => {
+          if (isSelecting) {
+            e.preventDefault();
+          }
+        }}
+        style={{ touchAction: isSelecting ? "none" : "auto" }}
       >
         {grid.map((row, i) => (
           <div key={i} className="flex">
@@ -103,8 +110,12 @@ export default function Grid({
                   onMouseDown={() => startSelection(i, j)}
                   onMouseEnter={() => updateSelection(i, j)}
                   // 📱 Eventos de touch (para móviles)
-                  onTouchStart={() => startSelection(i, j)}
+                  onTouchStart={(e) => {
+                    e.preventDefault(); // 🔥 Prevenir comportamiento por defecto
+                    startSelection(i, j);
+                  }}
                   onTouchMove={(e) => {
+                    e.preventDefault(); // 🔥 Prevenir scroll
                     const touch = e.touches[0];
                     const element = document.elementFromPoint(
                       touch.clientX,
@@ -117,7 +128,10 @@ export default function Grid({
                       );
                     }
                   }}
-                  onTouchEnd={endSelection}
+                  onTouchEnd={(e) => {
+                    e.preventDefault(); // 🔥 Prevenir comportamiento por defecto
+                    endSelection();
+                  }}
                   // dataset para reconocer posición al mover el dedo
                   data-row={i}
                   data-col={j}
