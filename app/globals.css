@@ -4,6 +4,9 @@
 
 body {
   background-color: #3aaeab;
+  background-color: #3aaeab;
+  background-image: url("/patron.svg");
+  background-repeat: repeat;
   margin: 0;
   padding: 0;
 }
@@ -151,6 +154,7 @@ body {
   width: 100%;
   /* ✅ QUITAR touch-action: pan-y */
 }
+
 @media (max-width: 1022px) {
   .grid .blocks {
     width: auto;
@@ -193,19 +197,13 @@ body {
   padding: 1rem;
   box-sizing: border-box;
   max-width: 1025px;
-  width: 100%;
-}
-@media (max-width: 1022px) {
-  .words-container {
-    max-width: 100%;
-  }
-  .words-container > div {
-    flex-direction: row !important;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-  }
 }
 
+.words-container > div {
+  flex-direction: row !important;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
 .words-container h2 {
   font-size: 1.5rem;
   font-weight: bold;
@@ -281,6 +279,37 @@ body {
   text-align: center;
 }
 
+.timer-words-link {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  text-decoration: none;
+  justify-content: flex-end;
+  margin-top: 0.25rem;
+  padding: 1rem;
+}
+
+.timer-words-link .timer-label {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+.timer-words-link .timer-arrow {
+  font-size: 1.5rem;
+  color: #171717;
+}
+
+.timer-words-link:hover .timer-label,
+.timer-words-link:hover .timer-arrow {
+  opacity: 1;
+}
+
+/* Ocultar en desktop */
+@media (min-width: 1022px) {
+  .timer-words-link {
+    display: none;
+  }
+}
+
 /* ============================================
    BOTÓN DE INSTALACIÓN PWA
    ============================================ */
@@ -307,9 +336,9 @@ body {
   box-shadow: 0 6px 16px rgba(58, 174, 171, 0.6);
 }
 
-* {
-  /* border:1px solid red; */
-}
+/* ============================================
+   BANNER RETRO LOGRADO
+   ============================================ */
 
 .win-toast {
   position: fixed;
@@ -364,6 +393,7 @@ body {
     transform: translateX(400px);
     opacity: 0;
   }
+
   to {
     transform: translateX(0);
     opacity: 1;
@@ -375,9 +405,11 @@ body {
   100% {
     transform: rotate(0deg);
   }
+
   25% {
     transform: rotate(-5deg);
   }
+
   75% {
     transform: rotate(5deg);
   }
@@ -388,6 +420,7 @@ body {
   100% {
     transform: rotate(0deg);
   }
+
   50% {
     transform: rotate(15deg);
   }
@@ -405,7 +438,8 @@ body {
   justify-content: center;
   z-index: 1000;
   animation: fadeIn 0.3s ease;
-  padding: 1rem; /* 👈 Padding para mobile */
+  padding: 1rem;
+  /* 👈 Padding para mobile */
 }
 
 .win-modal {
@@ -415,7 +449,8 @@ body {
   text-align: center;
   position: relative;
   max-width: 400px;
-  width: 90%; /* 👈 Ancho responsive */
+  width: 90%;
+  /* 👈 Ancho responsive */
   animation: slideUp 0.5s ease;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 }
@@ -476,4 +511,21 @@ body {
     padding: 0.8rem 1.5rem;
     font-size: 1rem;
   }
+}
+
+/* ============================================
+   BANNER
+   ============================================ */
+
+.banner-wrapper {
+  width: 100%;
+  max-width: 1025px;
+  margin: 0 auto 1rem 0;
+}
+
+.banner-wrapper .image {
+  width: 100%;
+  height: auto;
+  border-radius: 1rem;
+  display: block;
 }

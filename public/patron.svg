@@ -1,0 +1,21 @@
+<svg width="80" height="80" xmlns="http://www.w3.org/2000/svg">
+  <rect width="80" height="80" fill="#3aaeab"/>
+  <g opacity="0.15" fill="#ffffff" font-family="Arial, sans-serif" font-size="16">
+    <text x="8" y="18">G</text>
+    <text x="28" y="18">A</text>
+    <text x="48" y="18">T</text>
+    <text x="68" y="18">O</text>
+    <text x="8" y="38">N</text>
+    <text x="28" y="38">M</text>
+    <text x="48" y="38">I</text>
+    <text x="68" y="38">S</text>
+    <text x="8" y="58">R</text>
+    <text x="28" y="58">L</text>
+    <text x="48" y="58">D</text>
+    <text x="68" y="58">J</text>
+    <text x="8" y="78">P</text>
+    <text x="28" y="78">K</text>
+    <text x="48" y="78">V</text>
+    <text x="68" y="78">Z</text>
+  </g>
+</svg>

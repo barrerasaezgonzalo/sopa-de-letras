@@ -55,6 +55,16 @@ export default function WordSearchPage() {
         />
         <InstallPrompt />
       </div>
+      <footer
+        style={{
+          textAlign: "center",
+          padding: "2rem",
+          opacity: 0.9,
+          fontSize: "1rem",
+        }}
+      >
+        Creado a las 3 AM cuando el café ya no hacía efecto ☕💻
+      </footer>
     </div>
   );
 }

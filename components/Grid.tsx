@@ -114,7 +114,7 @@ export default function Grid({
         className="blocks"
         onMouseUp={endSelection}
         onMouseLeave={endSelection}
-        style={{ touchAction: "none" }} // 🔥 Deshabilitar todas las acciones táctiles nativas
+        style={{ touchAction: "none" }}
       >
         {grid.map((row, i) => (
           <div key={i} className="flex">
@@ -133,7 +133,7 @@ export default function Grid({
                   className="letter select-none"
                   style={{
                     backgroundColor: bgColor,
-                    touchAction: "none", // 🔥 También en cada celda
+                    touchAction: "none",
                   }}
                   // 🖱️ Eventos de mouse
                   onMouseDown={() => startSelection(i, j)}
@@ -219,13 +219,13 @@ export default function Grid({
                 <div key={i} className="confetti-piece" />
               ))}
             </div>
-            <h1>🎉 ¡Felicidades! 🎉</h1>
+            <h1>🚀 ¡Felicidades! 🤟 </h1>
             <p>¡Encontraste todas las palabras!</p>
             <button
               onClick={() => setShowWinModal(false)}
               className="win-button"
             >
-              ¡Genial!
+              ¿Lo itengas denuevo para superar tu reccord?
             </button>
           </div>
         </div>

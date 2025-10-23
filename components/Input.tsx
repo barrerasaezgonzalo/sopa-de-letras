@@ -20,7 +20,7 @@ export default function Input({
         value={topic}
         onChange={(e) => setTopic(e.target.value)}
         onKeyDown={handleKeyPress}
-        placeholder="Ingresa un tema (ej: animales, países, deportes...)"
+        placeholder="Ingresa un tema (ej: líbros, tecnolocía, cocina...)"
         disabled={loading}
       />
       <button onClick={handleGenerate} disabled={loading || !topic.trim()}>

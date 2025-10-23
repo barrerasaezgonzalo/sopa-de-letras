@@ -16,15 +16,15 @@ if (!self.define) {
       })
   );
   self.define = (a, t) => {
-    const c =
+    const i =
       e ||
       ("document" in self ? document.currentScript.src : "") ||
       location.href;
-    if (s[c]) return;
-    let i = {};
-    const r = (e) => n(e, c),
-      o = { module: { uri: c }, exports: i, require: r };
-    s[c] = Promise.all(a.map((e) => o[e] || r(e))).then((e) => (t(...e), i));
+    if (s[i]) return;
+    let c = {};
+    const r = (e) => n(e, i),
+      o = { module: { uri: i }, exports: c, require: r };
+    s[i] = Promise.all(a.map((e) => o[e] || r(e))).then((e) => (t(...e), c));
   };
 }
 define(["./workbox-4754cb34"], function (e) {
@@ -36,14 +36,14 @@ define(["./workbox-4754cb34"], function (e) {
       [
         {
           url: "/_next/app-build-manifest.json",
-          revision: "18f5e73bfd222a91c0e2d217a4c0c9e5",
+          revision: "057f454b1baecbc78c737006405f3edd",
         },
         {
-          url: "/_next/static/NnVKW85iEZt8KEFdT2U9P/_buildManifest.js",
+          url: "/_next/static/VmlWZLqXVdnYdHFl8pL5u/_buildManifest.js",
           revision: "7fe0bc4e445d3b907ad6c3554194e938",
         },
         {
-          url: "/_next/static/NnVKW85iEZt8KEFdT2U9P/_ssgManifest.js",
+          url: "/_next/static/VmlWZLqXVdnYdHFl8pL5u/_ssgManifest.js",
           revision: "b6652df95db52feb4daf4eca35380933",
         },
         {
@@ -79,8 +79,8 @@ define(["./workbox-4754cb34"], function (e) {
           revision: "1f2db5ac97afd9c1",
         },
         {
-          url: "/_next/static/chunks/app/page-0699ebac9585dc50.js",
-          revision: "0699ebac9585dc50",
+          url: "/_next/static/chunks/app/page-a6a20be0718398ac.js",
+          revision: "a6a20be0718398ac",
         },
         {
           url: "/_next/static/chunks/framework-acd67e14855de5a2.js",
@@ -111,13 +111,14 @@ define(["./workbox-4754cb34"], function (e) {
           revision: "9d795f9e26b86992",
         },
         {
-          url: "/_next/static/css/4b6056f4c70500ca.css",
-          revision: "4b6056f4c70500ca",
+          url: "/_next/static/css/1d0aec6d47d5d4e2.css",
+          revision: "1d0aec6d47d5d4e2",
         },
         { url: "/banner.svg", revision: "909a0b16cb0a166089c218bdc5f1d20a" },
         { url: "/icon-192.png", revision: "a17eec4ebbeb9dab5d345b52ae805c9d" },
         { url: "/icon-512.png", revision: "affb420b86ea3b8d84048711ab49a4ff" },
         { url: "/manifest.json", revision: "c4bfb240388eca885e31d7db4d95b6ae" },
+        { url: "/patron.svg", revision: "c034c8e93436e286791540b2a3e7f0c1" },
       ],
       { ignoreURLParametersMatching: [] },
     ),
