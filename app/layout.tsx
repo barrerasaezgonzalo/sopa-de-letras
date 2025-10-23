@@ -1,5 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   title: "Sopa de Letras",
@@ -24,11 +25,13 @@ export default function RootLayout({
   return (
     <html lang="es">
       <head>
-        {/* ✅ Agregar esto */}
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#3AAEAB" />
       </head>
-      <body suppressHydrationWarning>{children}</body>
+      <body suppressHydrationWarning>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
