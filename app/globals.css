@@ -31,7 +31,6 @@ body {
   font-size: 2rem;
   font-weight: bold;
   text-align: center;
-  background: #2b7a77;
   padding: 1rem;
   border-radius: 8px;
   margin: 0 0 1rem 0;
@@ -518,14 +517,23 @@ body {
    ============================================ */
 
 .banner-wrapper {
-  width: 100%;
-  max-width: 1025px;
-  margin: 0 auto 1rem 0;
+  display: flex;
+  justify-content: center;
+  height: 75px;
+}
+.banner-wrapper h1 {
+  font-size: 3rem;
 }
 
-.banner-wrapper .image {
-  width: 100%;
-  height: auto;
-  border-radius: 1rem;
-  display: block;
+.banner-wrapper p {
+  font-size: 1rem;
+}
+.banner-wrapper .subtitle {
+  display: flex;
+  text-align: center;
+}
+
+.banner-subtitle p {
+  text-align: center;
+  font-size: 1rem;
 }

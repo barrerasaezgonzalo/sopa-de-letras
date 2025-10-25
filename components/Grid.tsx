@@ -225,7 +225,7 @@ export default function Grid({
               onClick={() => setShowWinModal(false)}
               className="win-button"
             >
-              ¿Lo itengas denuevo para superar tu reccord?
+              ¿Lo intentas denuevo?
             </button>
           </div>
         </div>
