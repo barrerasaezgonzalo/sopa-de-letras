@@ -2,11 +2,12 @@
 
 import { useCallback, useState } from "react";
 import { handleGenerate } from "./utils";
-import Input from "@/components/Input";
-import Grid from "@/components/Grid";
+import Input from "@/components/input";
+import Grid from "@/components/grid";
 import Banner from "@/components/header";
-import InstallPrompt from "@/components/InstallPrompt";
 import Timmer from "@/components/timmer";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function WordSearchPage() {
   const [topic, setTopic] = useState("");
@@ -53,7 +54,6 @@ export default function WordSearchPage() {
           wordPositions={wordPositions}
           setFoundWords={setFoundWords}
         />
-        <InstallPrompt />
       </div>
       <footer
         style={{
@@ -63,7 +63,22 @@ export default function WordSearchPage() {
           fontSize: "1rem",
         }}
       >
-        Creado a las 3 AM cuando el café ya no hacía efecto ☕💻
+        <p>Creado a las 3 AM cuando el café ya no hacía efecto ☕💻</p>
+
+        <Link href="https://chilehub.cl">
+          <Image
+            src="/chilehub.png"
+            alt="Logo de Sopa de Letras"
+            width={200}
+            height={80}
+            style={{
+              width: "200px",
+              height: "80px",
+              objectFit: "contain",
+              marginTop: "1rem",
+            }}
+          />
+        </Link>
       </footer>
     </div>
   );

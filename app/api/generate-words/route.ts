@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
     });
 
     const text = completion.choices[0]?.message?.content || "";
-    console.log("Respuesta de la API:", text);
+    // console.log("Respuesta de la API:", text);
 
     // Limpiar y procesar las palabras
     const words = text
@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
       .filter((word, index, self) => self.indexOf(word) === index) // Remover duplicados
       .slice(0, 10); // Máximo 10 palabras
 
-    console.log("Palabras procesadas:", words);
+    // console.log("Palabras procesadas:", words);
 
     if (words.length < 5) {
       // Al menos 5 palabras para que sea jugable

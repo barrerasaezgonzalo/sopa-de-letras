@@ -104,11 +104,75 @@ export default function Grid({
     setFoundWords,
   ]);
 
-  if (grid.length === 0) return null;
+  if (grid.length === 0)
+    return (
+      <p className="subtitle">
+        Elige cualquier tema que te guste y crea tu propia sopa de letras en
+        segundos. 🎲 Las palabras aparecerán mezcladas en un mar de letras,
+        listas para ser descubiertas. ¡Juega solo o desafía a alguien más para
+        ver quién las encuentra primero! 🔥 Cada partida es distinta, así que no
+        hay dos sopas iguales. 🧠
+      </p>
+    );
 
   // ==== Render ====
   return (
     <div className="grid">
+      {/* Lista de palabras */}
+      <div className="words-container">
+        <h2>Palabras a encontrar</h2>
+        <div
+          style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
+        >
+          {words.map((word, idx) => (
+            <div
+              key={idx}
+              className="word"
+              style={{
+                backgroundColor: foundWords.has(word)
+                  ? WORD_COLORS.FOUND_BG
+                  : WORD_COLORS.DEFAULT_BG,
+                color: foundWords.has(word)
+                  ? WORD_COLORS.FOUND_TEXT
+                  : WORD_COLORS.DEFAULT_TEXT,
+                textDecoration: foundWords.has(word) ? "line-through" : "none",
+              }}
+            >
+              {word}
+            </div>
+          ))}
+        </div>
+        <div className="footer">
+          <p>
+            Encontradas: <span>{foundWords.size}</span> / {words.length}
+          </p>
+        </div>
+      </div>
+      {showWinModal && (
+        <div
+          className="win-modal-overlay"
+          onClick={() => setShowWinModal(false)}
+        >
+          <div className="win-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="confetti">
+              {[...Array(50)].map((_, i) => (
+                <div key={i} className="confetti-piece" />
+              ))}
+            </div>
+            <h1>🚀 ¡Felicidades! 🤟 </h1>
+            <p>¡Encontraste todas las palabras!</p>
+            <button
+              onClick={() => {
+                setShowWinModal(false);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              className="win-button"
+            >
+              ¿Lo intentas de nuevo?
+            </button>
+          </div>
+        </div>
+      )}
       <div
         ref={gridRef}
         className="blocks"
@@ -177,59 +241,6 @@ export default function Grid({
           </div>
         ))}
       </div>
-
-      {/* Lista de palabras */}
-      <div className="words-container">
-        <h2>Palabras a encontrar</h2>
-        <div
-          style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
-        >
-          {words.map((word, idx) => (
-            <div
-              key={idx}
-              className="word"
-              style={{
-                backgroundColor: foundWords.has(word)
-                  ? WORD_COLORS.FOUND_BG
-                  : WORD_COLORS.DEFAULT_BG,
-                color: foundWords.has(word)
-                  ? WORD_COLORS.FOUND_TEXT
-                  : WORD_COLORS.DEFAULT_TEXT,
-                textDecoration: foundWords.has(word) ? "line-through" : "none",
-              }}
-            >
-              {word}
-            </div>
-          ))}
-        </div>
-        <div className="footer">
-          <p>
-            Encontradas: <span>{foundWords.size}</span> / {words.length}
-          </p>
-        </div>
-      </div>
-      {showWinModal && (
-        <div
-          className="win-modal-overlay"
-          onClick={() => setShowWinModal(false)}
-        >
-          <div className="win-modal" onClick={(e) => e.stopPropagation()}>
-            <div className="confetti">
-              {[...Array(50)].map((_, i) => (
-                <div key={i} className="confetti-piece" />
-              ))}
-            </div>
-            <h1>🚀 ¡Felicidades! 🤟 </h1>
-            <p>¡Encontraste todas las palabras!</p>
-            <button
-              onClick={() => setShowWinModal(false)}
-              className="win-button"
-            >
-              ¿Lo intentas denuevo?
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

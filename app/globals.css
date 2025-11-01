@@ -3,10 +3,7 @@
    ============================================ */
 
 body {
-  background-color: #3aaeab;
-  background-color: #3aaeab;
-  background-image: url("/patron.svg");
-  background-repeat: repeat;
+  background-color: #f2f6f9;
   margin: 0;
   padding: 0;
 }
@@ -18,7 +15,7 @@ body {
 .contenedor {
   min-height: 100vh;
   font-family: monospace;
-  color: white;
+  color: black;
 }
 
 .main {
@@ -35,7 +32,13 @@ body {
   border-radius: 8px;
   margin: 0 0 1rem 0;
 }
-
+.main .subtitle {
+  font-size: 1.125rem;
+  text-align: center;
+  color: #4b5563;
+  width: 900px;
+  margin: 0 auto;
+}
 /* ============================================
    BUSCADOR / INPUT
    ============================================ */
@@ -44,12 +47,10 @@ body {
   display: flex;
   gap: 1rem;
   margin-bottom: 2rem;
-  max-width: 1025px;
+  justify-content: center;
 }
 
-.search input,
-.search-input {
-  flex: 1;
+.search input {
   padding: 0.5rem;
   font-size: 1.125rem;
   border: 2px solid #182329;
@@ -58,26 +59,25 @@ body {
   box-sizing: border-box;
   transition: all 0.2s;
   font-family: inherit;
-  width: auto;
+  width: 600px;
 }
 
-.search-input:focus {
+.search input:focus {
   border-color: #3aaeab;
   box-shadow: 0 0 0 3px rgba(58, 174, 171, 0.1);
 }
 
-.search-input:disabled {
+.search input:disabled {
   background-color: #f3f4f6;
   cursor: not-allowed;
   opacity: 0.6;
 }
 
-.search-input::placeholder {
+.search input::placeholder {
   color: #9ca3af;
 }
 
-.search button,
-.search-button {
+.search button {
   padding: 0.5rem;
   font-size: 2rem;
   font-weight: 600;
@@ -94,32 +94,15 @@ body {
   font-family: inherit;
 }
 
-.search button:active:not(:disabled),
-.search-button:active:not(:disabled) {
+.search button:active:not(:disabled) {
   transform: translateY(0);
 }
 
-.search button:disabled,
-.search-button:disabled {
+.search button:disabled {
   background-color: #4a6497;
   border-color: #4a6497;
   cursor: not-allowed;
   opacity: 0.7;
-}
-
-.spinner {
-  display: inline-block;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 /* ============================================
@@ -130,7 +113,7 @@ body {
   display: flex;
   gap: 1rem;
   margin-bottom: 2rem;
-  max-width: 1025px;
+
   flex-direction: row;
 }
 
@@ -242,13 +225,13 @@ body {
 .timer-container {
   display: flex;
   margin-bottom: 2rem;
-  max-width: 1025px;
   background: white;
   border-radius: 0.75rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-wrap: wrap;
   color: #171717;
+  justify-content: center;
 }
 
 .timer-current,
@@ -276,37 +259,6 @@ body {
   color: #3aaeab;
   min-width: 70px;
   text-align: center;
-}
-
-.timer-words-link {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  text-decoration: none;
-  justify-content: flex-end;
-  margin-top: 0.25rem;
-  padding: 1rem;
-}
-
-.timer-words-link .timer-label {
-  font-size: 1rem;
-  opacity: 0.9;
-}
-.timer-words-link .timer-arrow {
-  font-size: 1.5rem;
-  color: #171717;
-}
-
-.timer-words-link:hover .timer-label,
-.timer-words-link:hover .timer-arrow {
-  opacity: 1;
-}
-
-/* Ocultar en desktop */
-@media (min-width: 1022px) {
-  .timer-words-link {
-    display: none;
-  }
 }
 
 /* ============================================
@@ -360,31 +312,6 @@ body {
 .win-emoji {
   font-size: 3rem;
   animation: spin 1s ease infinite;
-}
-
-.win-toast strong {
-  font-size: 1.3rem;
-  display: block;
-}
-
-.win-toast p {
-  margin: 0.2rem 0 0 0;
-  opacity: 0.9;
-}
-
-.win-toast button {
-  background: rgba(255, 255, 255, 0.3);
-  border: none;
-  color: white;
-  padding: 0.5rem 0.7rem;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 1.2rem;
-  transition: background 0.2s;
-}
-
-.win-toast button:hover {
-  background: rgba(255, 255, 255, 0.5);
 }
 
 @keyframes slideInRight {
@@ -519,10 +446,13 @@ body {
 .banner-wrapper {
   display: flex;
   justify-content: center;
-  height: 75px;
+  align-items: center;
+  flex-direction: column;
 }
 .banner-wrapper h1 {
   font-size: 3rem;
+  padding: 0;
+  margin: 0;
 }
 
 .banner-wrapper p {
@@ -531,6 +461,9 @@ body {
 .banner-wrapper .subtitle {
   display: flex;
   text-align: center;
+}
+.banner-wrapper img {
+  margin-bottom: 1rem;
 }
 
 .banner-subtitle p {

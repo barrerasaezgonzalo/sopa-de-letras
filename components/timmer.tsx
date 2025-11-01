@@ -48,15 +48,6 @@ export default function Timmer({ grid, words, foundWords }: TimmerProps) {
     return () => clearInterval(interval);
   }, [isTimerRunning]);
 
-  // 🔥 Función para hacer scroll suave a las palabras
-  const scrollToWords = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    document.querySelector(".words-container")?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-  };
-
   return (
     grid.length > 0 && (
       <div className="timer-container">
@@ -73,16 +64,6 @@ export default function Timmer({ grid, words, foundWords }: TimmerProps) {
             <span className="timer-value">{formatTime(bestTime)}</span>
           </div>
         )}
-
-        {/* 📱 Link solo visible en móvil */}
-        <a
-          href="#palabras-encontrar"
-          onClick={scrollToWords}
-          className="timer-words-link md:hidden"
-        >
-          <span className="timer-label">Ver palabras</span>
-          <span className="timer-arrow">↓</span>
-        </a>
       </div>
     )
   );
