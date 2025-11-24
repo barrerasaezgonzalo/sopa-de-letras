@@ -27,6 +27,7 @@ export interface GridProps {
   foundWords: Set<string>;
   wordPositions: Map<string, string[]>;
   setFoundWords: React.Dispatch<React.SetStateAction<Set<string>>>;
+  setTopic: React.Dispatch<React.SetStateAction<string>>;
 }
 
 /**

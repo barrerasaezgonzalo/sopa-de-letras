@@ -7,15 +7,13 @@ export default function Timmer({ grid, words, foundWords }: TimmerProps) {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
 
-  // ✅ Cargar mejor tiempo al iniciar
+  // Cargar mejor tiempo
   useEffect(() => {
     const saved = localStorage.getItem("bestTime");
-    if (saved) {
-      setBestTime(parseInt(saved));
-    }
+    if (saved) setBestTime(parseInt(saved));
   }, []);
 
-  // ✅ Iniciar timer cuando se genera la grilla
+  // Iniciar timer cuando se genera la grilla
   useEffect(() => {
     if (grid.length > 0 && words.length > 0) {
       setIsTimerRunning(true);
@@ -23,7 +21,7 @@ export default function Timmer({ grid, words, foundWords }: TimmerProps) {
     }
   }, [grid, words]);
 
-  // ✅ Detener timer cuando se completa el juego
+  // Detener timer al completar el juego
   useEffect(() => {
     if (foundWords.size > 0 && foundWords.size === words.length) {
       setIsTimerRunning(false);
@@ -35,7 +33,7 @@ export default function Timmer({ grid, words, foundWords }: TimmerProps) {
     }
   }, [foundWords, words, elapsedTime, bestTime]);
 
-  // ✅ Incrementar tiempo cada segundo
+  // Incremento cada segundo
   useEffect(() => {
     let interval: NodeJS.Timeout;
 
@@ -50,18 +48,20 @@ export default function Timmer({ grid, words, foundWords }: TimmerProps) {
 
   return (
     grid.length > 0 && (
-      <div className="timer-container">
-        <div className="timer-current">
-          <span className="timer-icon">⏱️</span>
-          <span className="timer-label">Tiempo:</span>
-          <span className="timer-value">{formatTime(elapsedTime)}</span>
+      <div className="flex items-center justify-center gap-6 p-4 max-w-md mx-auto mt-4 mb-4">
+        {/* Tiempo actual */}
+        <div className="flex items-center gap-2 text-gray-800">
+          <span className="text-2xl">⏱️</span>
+          <span className="font-semibold">Tiempo:</span>
+          <span className="text-lg font-mono">{formatTime(elapsedTime)}</span>
         </div>
 
+        {/* Mejor tiempo */}
         {bestTime !== null && (
-          <div className="timer-best">
-            <span className="timer-icon">🏆</span>
-            <span className="timer-label">Mejor:</span>
-            <span className="timer-value">{formatTime(bestTime)}</span>
+          <div className="flex items-center gap-2 text-green-700">
+            <span className="text-2xl">🏆</span>
+            <span className="font-semibold">Mejor:</span>
+            <span className="text-lg font-mono">{formatTime(bestTime)}</span>
           </div>
         )}
       </div>

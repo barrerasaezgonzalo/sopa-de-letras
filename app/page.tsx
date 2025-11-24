@@ -6,8 +6,6 @@ import Input from "@/components/input";
 import Grid from "@/components/grid";
 import Banner from "@/components/header";
 import Timmer from "@/components/timmer";
-import Link from "next/link";
-import Image from "next/image";
 
 export default function WordSearchPage() {
   const [topic, setTopic] = useState("");
@@ -17,8 +15,8 @@ export default function WordSearchPage() {
     new Map(),
   );
   const [foundWords, setFoundWords] = useState<Set<string>>(new Set());
-  const [, setFoundCells] = useState<Set<string>>(new Set());
-  const [, setSelectedCells] = useState<Set<string>>(new Set());
+  // const [, setFoundCells] = useState<Set<string>>(new Set());
+  // const [, setSelectedCells] = useState<Set<string>>(new Set());
   const [loading, setLoading] = useState(false);
 
   const onGenerate = useCallback(() => {
@@ -28,15 +26,15 @@ export default function WordSearchPage() {
       setWords,
       setWordPositions,
       setGrid,
-      setFoundCells,
+      // setFoundCells,
       setFoundWords,
-      setSelectedCells,
+      // setSelectedCells,
     );
   }, [topic]);
 
   return (
-    <div className="contenedor">
-      <div className="main">
+    <div className="min-h-screen font-mono text-black">
+      <div className="max-w-[1200px] mx-auto p-4">
         <Banner />
         <Input
           topic={topic}
@@ -53,33 +51,9 @@ export default function WordSearchPage() {
           foundWords={foundWords}
           wordPositions={wordPositions}
           setFoundWords={setFoundWords}
+          setTopic={setTopic}
         />
       </div>
-      <footer
-        style={{
-          textAlign: "center",
-          padding: "2rem",
-          opacity: 0.9,
-          fontSize: "1rem",
-        }}
-      >
-        <p>Creado a las 3 AM cuando el café ya no hacía efecto ☕💻</p>
-
-        <Link href="https://chilehub.cl">
-          <Image
-            src="/chilehub.png"
-            alt="Logo de Sopa de Letras"
-            width={200}
-            height={80}
-            style={{
-              width: "200px",
-              height: "80px",
-              objectFit: "contain",
-              marginTop: "1rem",
-            }}
-          />
-        </Link>
-      </footer>
     </div>
   );
 }

@@ -5,9 +5,17 @@ import { Analytics } from "@vercel/analytics/react";
 export const metadata: Metadata = {
   title: "Sopa de Letras",
   description: "Juego de sopa de letras con palabras generadas por IA",
-  themeColor: "#3AAEAB",
-  formatDetection: {
-    telephone: false,
+  metadataBase: new URL("https://sopa-de-letras-delta.vercel.app/"),
+  openGraph: {
+    type: "website",
+    url: "https://sopa-de-letras-delta.vercel.app/",
+    title: "Sopa de Letras",
+    description: "Juego de sopa de letras con palabras generadas por IA",
+    images: [
+      {
+        url: "https://sopa-de-letras-delta.vercel.app/logo.png",
+      },
+    ],
   },
 };
 

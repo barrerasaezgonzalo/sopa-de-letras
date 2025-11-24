@@ -258,9 +258,9 @@ export const handleGenerate = async (
   setWords: React.Dispatch<React.SetStateAction<string[]>>,
   setWordPositions: React.Dispatch<React.SetStateAction<Map<string, string[]>>>,
   setGrid: React.Dispatch<React.SetStateAction<string[][]>>,
-  setFoundCells: React.Dispatch<React.SetStateAction<Set<string>>>,
+  //setFoundCells: React.Dispatch<React.SetStateAction<Set<string>>>,
   setFoundWords: React.Dispatch<React.SetStateAction<Set<string>>>,
-  setSelectedCells: React.Dispatch<React.SetStateAction<Set<string>>>,
+  //setSelectedCells: React.Dispatch<React.SetStateAction<Set<string>>>,
 ): Promise<void> => {
   // Validar topic
   if (!topic.trim()) {
@@ -272,9 +272,9 @@ export const handleGenerate = async (
   setGrid([]);
   setWords([]);
   setWordPositions(new Map());
-  setFoundCells(new Set());
+  //setFoundCells(new Set());
   setFoundWords(new Set());
-  setSelectedCells(new Set());
+  //setSelectedCells(new Set());
 
   setLoading(true);
 
