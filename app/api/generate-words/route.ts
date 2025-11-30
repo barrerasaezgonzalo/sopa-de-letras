@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Groq from "groq-sdk";
+import { MODEL } from "@/app/contants";
 
 const client = new Groq({
   apiKey: process.env.NEXT_PUBLIC_GROQ_API_KEY,
@@ -9,7 +10,6 @@ export async function POST(req: NextRequest) {
   try {
     const { topic } = await req.json();
 
-    // Validación del topic
     if (!topic || typeof topic !== "string" || topic.trim().length === 0) {
       return NextResponse.json(
         { error: "Debe proporcionar un tema válido" },
@@ -22,39 +22,34 @@ export async function POST(req: NextRequest) {
         {
           role: "system",
           content:
-            "Eres un asistente que genera exactamente 10 palabras relacionadas con un tema. Solo respondes con palabras separadas por comas, sin números, sin puntos, sin explicaciones.",
+            "Eres un asistente que genera exactamente 10 palabras relacionadas con un tema. Solo responde con palabras separadas por comas.",
         },
         {
           role: "user",
           content: `Tema: "${topic}". Genera 10 palabras relacionadas.`,
         },
       ],
-      model: "llama-3.3-70b-versatile",
-      temperature: 0.7, // Bajado un poco para respuestas más consistentes
-      max_tokens: 100, // Limitar tokens para respuestas más cortas
+      model: MODEL,
+      temperature: 0.7,
+      max_tokens: 100,
     });
 
     const text = completion.choices[0]?.message?.content || "";
-    // console.log("Respuesta de la API:", text);
 
-    // Limpiar y procesar las palabras
     const words = text
-      .split(/[,\n;]/) // Separar por comas, saltos de línea o punto y coma
+      .split(/[,\n;]/)
       .map((word) =>
         word
           .trim()
-          .replace(/^\d+[\.\-\)]\s*/, "") // Remover números al inicio
-          .replace(/[^\wáéíóúñü]/gi, "") // Remover caracteres especiales, mantener acentos
+          .replace(/^\d+[\.\-\)]\s*/, "")
+          .replace(/[^\wáéíóúñü]/gi, "")
           .toLowerCase(),
       )
-      .filter((word) => word.length >= 3 && word.length <= 12) // Palabras entre 3 y 12 caracteres
-      .filter((word, index, self) => self.indexOf(word) === index) // Remover duplicados
-      .slice(0, 10); // Máximo 10 palabras
-
-    // console.log("Palabras procesadas:", words);
+      .filter((word) => word.length >= 3 && word.length <= 12)
+      .filter((word, index, self) => self.indexOf(word) === index)
+      .slice(0, 10);
 
     if (words.length < 5) {
-      // Al menos 5 palabras para que sea jugable
       return NextResponse.json(
         {
           error:
@@ -66,9 +61,6 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ words });
   } catch (err: unknown) {
-    console.error("Error generando palabras:", err);
-
-    // Mejor manejo de errores
     const errorMessage =
       err instanceof Error
         ? err.message

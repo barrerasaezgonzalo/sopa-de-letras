@@ -7,22 +7,12 @@ import {
   DIRECTIONS,
 } from "./contants";
 
-/* ============================================
-   FUNCIONES DE CREACIÓN Y VALIDACIÓN DE GRILLA
-   ============================================ */
-
-/**
- * Crea una grilla vacía del tamaño definido en GRID_SIZE
- */
 export const createEmptyGrid = (): string[][] => {
   return Array(GRID_SIZE)
     .fill(null)
     .map(() => Array(GRID_SIZE).fill(""));
 };
 
-/**
- * Verifica si una palabra puede ser colocada en una posición específica
- */
 export const canPlaceWord = (
   grid: string[][],
   word: string,
@@ -36,7 +26,6 @@ export const canPlaceWord = (
     const newRow = row + i * dx;
     const newCol = col + i * dy;
 
-    // Verificar límites de la grilla
     if (
       newRow < 0 ||
       newRow >= GRID_SIZE ||
@@ -46,7 +35,6 @@ export const canPlaceWord = (
       return false;
     }
 
-    // Verificar si la celda está vacía o coincide con la letra de la palabra
     if (grid[newRow][newCol] !== "" && grid[newRow][newCol] !== word[i]) {
       return false;
     }
@@ -55,14 +43,8 @@ export const canPlaceWord = (
   return true;
 };
 
-/**
- * Genera una clave única para una celda basada en su fila y columna
- */
 export const getCellKey = (row: number, col: number): string => `${row}-${col}`;
 
-/**
- * Coloca una palabra en la grilla y guarda sus posiciones
- */
 export const placeWordWithPosition = (
   grid: string[][],
   word: string,
@@ -84,14 +66,6 @@ export const placeWordWithPosition = (
   wordPositions.set(word, positions);
 };
 
-/* ============================================
-   FUNCIONES DE SELECCIÓN Y VALIDACIÓN
-   ============================================ */
-
-/**
- * Obtiene las celdas en línea recta entre dos puntos
- * Soporta movimientos horizontales, verticales y diagonales
- */
 export const getCellsInLine = (
   startRow: number,
   startCol: number,
@@ -102,21 +76,17 @@ export const getCellsInLine = (
   const rowDiff = endRow - startRow;
   const colDiff = endCol - startCol;
 
-  // Calcular dirección del movimiento
   const rowDir = rowDiff === 0 ? 0 : rowDiff / Math.abs(rowDiff);
   const colDir = colDiff === 0 ? 0 : colDiff / Math.abs(colDiff);
 
-  // Validar que el movimiento sea en línea recta
   const isHorizontal = rowDiff === 0;
   const isVertical = colDiff === 0;
   const isDiagonal = Math.abs(rowDiff) === Math.abs(colDiff);
 
-  // Si no es un movimiento válido, retornar solo la celda inicial
   if (!isHorizontal && !isVertical && !isDiagonal) {
     return [getCellKey(startRow, startCol)];
   }
 
-  // Generar todas las celdas en la línea
   const steps = Math.max(Math.abs(rowDiff), Math.abs(colDiff));
   for (let i = 0; i <= steps; i++) {
     const currentRow = startRow + rowDir * i;
@@ -127,9 +97,6 @@ export const getCellsInLine = (
   return cells;
 };
 
-/**
- * Verifica si las celdas seleccionadas forman una palabra válida
- */
 export const checkWord = ({
   selectedCells,
   words,
@@ -148,21 +115,15 @@ export const checkWord = ({
     const wordCellsSorted = [...wordCells].sort().join(",");
     const selectedCellsSorted = selectedArray.join(",");
 
-    // Verificar si la selección coincide con la palabra
     if (wordCellsSorted === selectedCellsSorted && !foundWords.has(word)) {
-      // Marcar palabra como encontrada
       setFoundWords((prev) => {
         const newFound = new Set([...prev, word]);
-
-        // Verificar si completó el juego
         if (newFound.size === words.length) {
           shouldCelebrate = true;
         }
-
         return newFound;
       });
 
-      // Marcar celdas como encontradas
       setFoundCells((prev) => new Set([...prev, ...wordCells]));
     }
   });
@@ -170,13 +131,6 @@ export const checkWord = ({
   return shouldCelebrate;
 };
 
-/* ============================================
-   FUNCIONES DE GENERACIÓN DE GRILLA
-   ============================================ */
-
-/**
- * Genera la grilla de sopa de letras con las palabras proporcionadas
- */
 export const generateGrid = (
   wordList: string[],
   setWords: React.Dispatch<React.SetStateAction<string[]>>,
@@ -186,16 +140,13 @@ export const generateGrid = (
   const placedWords: string[] = [];
   const positions = new Map<string, string[]>();
 
-  // Intentar colocar cada palabra
   wordList.forEach((word) => {
-    // Limpiar y normalizar la palabra
     const cleanWord = word
       .toUpperCase()
       .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "") // Remover acentos
-      .replace(/[^A-Z]/g, ""); // Solo letras
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^A-Z]/g, "");
 
-    // Validar longitud de la palabra
     if (
       cleanWord.length < MIN_WORD_LENGTH ||
       cleanWord.length > MAX_WORD_LENGTH
@@ -205,10 +156,8 @@ export const generateGrid = (
 
     let placed = false;
     let attempts = 0;
-    const maxAttempts = MAX_PLACEMENT_ATTEMPTS;
 
-    // Intentar colocar la palabra en diferentes posiciones
-    while (!placed && attempts < maxAttempts) {
+    while (!placed && attempts < MAX_PLACEMENT_ATTEMPTS) {
       const dir = DIRECTIONS[Math.floor(Math.random() * DIRECTIONS.length)];
       const row = Math.floor(Math.random() * GRID_SIZE);
       const col = Math.floor(Math.random() * GRID_SIZE);
@@ -227,7 +176,6 @@ export const generateGrid = (
     }
   });
 
-  // Rellenar celdas vacías con letras aleatorias
   for (let i = 0; i < GRID_SIZE; i++) {
     for (let j = 0; j < GRID_SIZE; j++) {
       if (newGrid[i][j] === "") {
@@ -238,51 +186,35 @@ export const generateGrid = (
     }
   }
 
-  // Actualizar estados
   setWords(placedWords);
   setWordPositions(positions);
 
   return newGrid;
 };
 
-/* ============================================
-   FUNCIÓN PRINCIPAL DE GENERACIÓN
-   ============================================ */
-
-/**
- * Maneja el proceso completo de generación de la sopa de letras
- */
 export const handleGenerate = async (
   topic: string,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>,
   setWords: React.Dispatch<React.SetStateAction<string[]>>,
   setWordPositions: React.Dispatch<React.SetStateAction<Map<string, string[]>>>,
   setGrid: React.Dispatch<React.SetStateAction<string[][]>>,
-  //setFoundCells: React.Dispatch<React.SetStateAction<Set<string>>>,
   setFoundWords: React.Dispatch<React.SetStateAction<Set<string>>>,
-  //setSelectedCells: React.Dispatch<React.SetStateAction<Set<string>>>,
 ): Promise<void> => {
-  // Validar topic
   if (!topic.trim()) {
     console.warn("No se proporcionó un tema");
     return;
   }
 
-  // Limpiar estados previos
   setGrid([]);
   setWords([]);
   setWordPositions(new Map());
-  //setFoundCells(new Set());
   setFoundWords(new Set());
-  //setSelectedCells(new Set());
 
   setLoading(true);
 
-  // Pequeño delay para permitir que React actualice la UI
   await new Promise((resolve) => setTimeout(resolve, 50));
 
   try {
-    // Llamar a la API para generar palabras
     const response = await fetch("/api/generate-words", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -295,15 +227,13 @@ export const handleGenerate = async (
 
     const data = await response.json();
 
-    // Validar respuesta de la API
     if (!data.words || data.words.length === 0) {
       alert(
-        "No se pudieron generar palabras para este tema. Intenta con otro tema.",
+        "No se pudieron generar palabras para este tema. Intenta con otro.",
       );
       return;
     }
 
-    // Limpiar palabras recibidas
     const cleanWords = data.words
       .map((w: string) => w.trim())
       .filter((w: string) => w.length > 0);
@@ -313,7 +243,6 @@ export const handleGenerate = async (
       return;
     }
 
-    // Generar la grilla
     const newGrid = generateGrid(cleanWords, setWords, setWordPositions);
     setGrid(newGrid);
   } catch (error) {
@@ -329,5 +258,44 @@ export const handleGenerate = async (
 export const formatTime = (seconds: number): string => {
   const mins = Math.floor(seconds / 60);
   const secs = seconds % 60;
-  return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+  return `${mins.toString().padStart(2, "0")}:${secs
+    .toString()
+    .padStart(2, "0")}`;
+};
+
+export const handleRandom = async (
+  setTopic: React.Dispatch<React.SetStateAction<string>>,
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  setWords: React.Dispatch<React.SetStateAction<string[]>>,
+  setWordPositions: React.Dispatch<React.SetStateAction<Map<string, string[]>>>,
+  setGrid: React.Dispatch<React.SetStateAction<string[][]>>,
+  setFoundWords: React.Dispatch<React.SetStateAction<Set<string>>>,
+) => {
+  try {
+    const res = await fetch("/api/random-topic");
+
+    if (!res.ok) {
+      throw new Error("HTTP error random-topic " + res.status);
+    }
+
+    const data = (await res.json()) as { topic: string };
+
+    if (!data.topic) {
+      console.error("No llegó topic aleatorio");
+      return;
+    }
+
+    setTopic(data.topic);
+
+    await handleGenerate(
+      data.topic,
+      setLoading,
+      setWords,
+      setWordPositions,
+      setGrid,
+      setFoundWords,
+    );
+  } catch (err) {
+    console.error("Error en handleRandom:", err);
+  }
 };

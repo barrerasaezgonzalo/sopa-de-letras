@@ -1,3 +1,4 @@
+// src/app/layout.tsx
 import "./globals.css";
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
@@ -13,10 +14,14 @@ export const metadata: Metadata = {
     description: "Juego de sopa de letras con palabras generadas por IA",
     images: [
       {
-        url: "https://sopa-de-letras-delta.vercel.app/logo.png",
+        url: "/logo.png",
       },
     ],
   },
+  icons: {
+    icon: "/favicon.png",
+  },
+  themeColor: "#fa7e21",
 };
 
 export default function RootLayout({
@@ -26,10 +31,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" suppressHydrationWarning>
-      <head>
-        <link rel="icon" type="image/png" href="/favicon.png" />
-        <meta name="theme-color" content="#fa7e21" />
-      </head>
       <body suppressHydrationWarning>
         {children}
         <Analytics />
