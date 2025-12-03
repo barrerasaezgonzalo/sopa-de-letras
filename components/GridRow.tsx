@@ -13,7 +13,12 @@ interface GridRowProps {
 }
 
 export const GridRow = React.memo(
-  ({ rowIndex, row, selectedCells, foundCells }: GridRowProps) => {
+  function GridRowComponent({
+    rowIndex,
+    row,
+    selectedCells,
+    foundCells,
+  }: GridRowProps) {
     return (
       <div className="flex">
         {row.map((cell, colIndex) => {
@@ -36,16 +41,15 @@ export const GridRow = React.memo(
     );
   },
   (prevProps, nextProps) => {
-    // Solo re-renderiza si alguna celda de la fila cambió
     for (let i = 0; i < prevProps.row.length; i++) {
       const key = getCellKey(prevProps.rowIndex, i);
       if (
         prevProps.selectedCells.has(key) !== nextProps.selectedCells.has(key) ||
         prevProps.foundCells.has(key) !== nextProps.foundCells.has(key)
       ) {
-        return false; // re-renderiza
+        return false;
       }
     }
-    return true; // nada cambió, no renderiza
+    return true;
   },
 );

@@ -9,7 +9,10 @@ interface WordListProps {
   foundWords: Set<string>;
 }
 
-export const WordList = React.memo(({ words, foundWords }: WordListProps) => {
+export const WordList = React.memo(function WordListComponent({
+  words,
+  foundWords,
+}: WordListProps) {
   return (
     <aside className="w-full sm:w-auto min-w-[120px] bg-[#45809c] rounded p-4">
       <div className="flex flex-row flex-wrap gap-2 md:flex-col">

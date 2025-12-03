@@ -12,7 +12,13 @@ interface GridCellProps {
 }
 
 export const GridCell = React.memo(
-  ({ row, col, cell, isSelected, isFound }: GridCellProps) => {
+  function GridCellComponent({
+    row,
+    col,
+    cell,
+    isSelected,
+    isFound,
+  }: GridCellProps) {
     const bgColor = isFound
       ? CELL_COLORS.FOUND
       : isSelected
