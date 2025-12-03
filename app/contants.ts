@@ -18,9 +18,9 @@ export const DIRECTIONS: readonly Direction[] = [
 
 export const CELL_COLORS = {
   DEFAULT: "#ffffff",
-  SELECTED: "#fde047",
-  FOUND: "#86efac",
-  HOVER: "#f3f4f6",
+  SELECTED: "#FFB300",
+  FOUND: "#80F2AA",
+  HOVER: "#FFD780",
 } as const;
 export type CellColorKey = keyof typeof CELL_COLORS;
 

@@ -9,7 +9,7 @@ const client = new Groq({
 export async function GET() {
   const prompt = `
     Eres un asistente que genera un tema para un juego de sopa de letras.
-    Solo responde con una palabra o frase corta (máximo 3 palabras) adecuada para todas las edades.
+    Solo responde con una palabra adecuada para todas las edades.
     No agregues explicaciones, numeración, comillas, puntos o caracteres especiales.
     Evita repetir temas anteriores.
     Devuelve únicamente el texto limpio.

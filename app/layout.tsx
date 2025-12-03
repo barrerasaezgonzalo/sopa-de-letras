@@ -1,7 +1,6 @@
 // src/app/layout.tsx
 import "./globals.css";
 import type { Metadata } from "next";
-import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   title: "Sopa de Letras",
@@ -31,10 +30,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" suppressHydrationWarning>
-      <body suppressHydrationWarning>
-        {children}
-        <Analytics />
-      </body>
+      <body suppressHydrationWarning>{children}</body>
     </html>
   );
 }
