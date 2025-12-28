@@ -3,11 +3,7 @@
 
 import React from "react";
 import { WORD_COLORS } from "@/app/contants";
-
-interface WordListProps {
-  words: string[];
-  foundWords: Set<string>;
-}
+import { WordListProps } from "@/types/types";
 
 export const WordList = React.memo(function WordListComponent({
   words,

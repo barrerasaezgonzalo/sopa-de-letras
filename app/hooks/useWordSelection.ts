@@ -1,16 +1,8 @@
 "use client";
 
 import { useCallback, useState, useEffect } from "react";
-import { getCellKey, getCellsInLine, checkWord } from "@/app/utils";
-
-interface UseWordSelectionProps {
-  words: string[];
-  wordPositions: Map<string, string[]>;
-  foundWords: Set<string>;
-  setFoundWords: React.Dispatch<React.SetStateAction<Set<string>>>;
-  setFoundCells: React.Dispatch<React.SetStateAction<Set<string>>>;
-  gridKey: string | number; // sirve para resetear cuando la grilla cambia
-}
+import { getCellKey, getCellsInLine, checkWord } from "@/utils/wordSearch";
+import { UseWordSelectionProps } from "../../types/types";
 
 export function useWordSelection({
   words,

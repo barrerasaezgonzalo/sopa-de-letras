@@ -1,4 +1,4 @@
-import { InputProps } from "@/app/types";
+import { InputProps } from "@/types/types";
 import { KeyboardEvent } from "react";
 
 export default function Input({

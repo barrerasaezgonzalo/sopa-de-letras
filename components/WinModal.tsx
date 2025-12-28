@@ -1,13 +1,8 @@
 // components/WinModal.tsx
 "use client";
 
+import { WinModalProps } from "@/types/types";
 import React from "react";
-
-interface WinModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onRetry: () => void;
-}
 
 export const WinModal: React.FC<WinModalProps> = ({
   isOpen,

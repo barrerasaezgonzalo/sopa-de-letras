@@ -3,14 +3,8 @@
 
 import React from "react";
 import { GridCell } from "./GridCell";
-import { getCellKey } from "@/app/utils";
-
-interface GridRowProps {
-  rowIndex: number;
-  row: string[];
-  selectedCells: Set<string>;
-  foundCells: Set<string>;
-}
+import { getCellKey } from "@/utils/wordSearch";
+import { GridRowProps } from "@/types/types";
 
 export const GridRow = React.memo(
   function GridRowComponent({

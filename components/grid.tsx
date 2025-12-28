@@ -1,6 +1,6 @@
 "use client";
 
-import { GridProps } from "@/app/types";
+import { GridProps } from "@/types/types";
 import { useRef, useState, useEffect } from "react";
 import { useWordSelection } from "@/app/hooks/useWordSelection";
 import { GridRow } from "@/components/GridRow";

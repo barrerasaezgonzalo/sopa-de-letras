@@ -2,14 +2,7 @@
 
 import React from "react";
 import { CELL_COLORS } from "@/app/contants";
-
-interface GridCellProps {
-  row: number;
-  col: number;
-  cell: string;
-  isSelected: boolean;
-  isFound: boolean;
-}
+import { GridCellProps } from "@/types/types";
 
 export const GridCell = React.memo(
   function GridCellComponent({

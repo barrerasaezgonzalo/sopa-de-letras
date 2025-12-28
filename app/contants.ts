@@ -1,4 +1,4 @@
-import { Direction } from "./types";
+import { Direction } from "../types/types";
 
 export const GRID_SIZE = 15;
 export const MIN_WORD_LENGTH = 3;

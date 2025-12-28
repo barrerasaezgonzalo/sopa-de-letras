@@ -1,49 +1,33 @@
 "use client";
 
-import { useCallback, useState } from "react";
-import { handleGenerate, handleRandom } from "./utils";
+import { useCallback } from "react";
 import Input from "@/components/input";
 import Grid from "@/components/grid";
 import Header from "@/components/header";
+import { useWordSearch } from "./hooks/useWordSearch";
 
 export default function WordSearchPage() {
-  const [topic, setTopic] = useState("");
-  const [grid, setGrid] = useState<string[][]>([]);
-  const [words, setWords] = useState<string[]>([]);
-  const [wordPositions, setWordPositions] = useState<Map<string, string[]>>(
-    new Map(),
-  );
-  const [foundWords, setFoundWords] = useState<Set<string>>(new Set());
-  const [loading, setLoading] = useState(false);
+  const {
+    topic,
+    setTopic,
+    grid,
+    words,
+    wordPositions,
+    foundWords,
+    setFoundWords,
+    loading,
+    handleGenerate,
+    handleRandom,
+    setGrid,
+  } = useWordSearch();
 
   const onGenerate = useCallback(() => {
-    handleGenerate(
-      topic,
-      setLoading,
-      setWords,
-      setWordPositions,
-      setGrid,
-      setFoundWords,
-    );
-  }, [topic]);
+    handleGenerate(topic);
+  }, [handleGenerate, topic]);
 
   const onRandom = useCallback(() => {
-    handleRandom(
-      setTopic,
-      setLoading,
-      setWords,
-      setWordPositions,
-      setGrid,
-      setFoundWords,
-    );
-  }, [
-    setTopic,
-    setLoading,
-    setWords,
-    setWordPositions,
-    setGrid,
-    setFoundWords,
-  ]);
+    handleRandom();
+  }, [handleRandom]);
 
   return (
     <div className="min-h-screen font-mono text-black bg-[#296885]">
