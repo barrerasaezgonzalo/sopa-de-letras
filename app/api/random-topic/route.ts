@@ -20,11 +20,20 @@ export async function GET() {
       messages: [
         {
           role: "system",
-          content: prompt,
+          content: `Eres un generador de vocabulario especializado en juegos de lógica. 
+        Tu objetivo es proporcionar una palabra para una sopa de letras desafiante.
+        
+        REGLAS ESTRICTAS:
+        1. Genera exactamente 1 palabras.
+        2. La palabra debe tener entre 4 y 12 caracteres.
+        3. Evita términos ultra-genéricos; busca sustantivos interesantes o términos técnicos.
+        4. NO uses tildes ni caracteres especiales (ñ, á, é, etc.) para evitar bugs en la cuadrícula.
+        5. No incluyas explicaciones, solo las palabras separadas por comas.
+        6. CRUCIAL: Introduce variedad semántica. Si el tema es común, busca términos menos frecuentes.`,
         },
         {
           role: "user",
-          content: "Dame un tema aleatorio.",
+          content: `Tema: Aleatorio, Genera 1 palabra únicas y variada. Semilla de aleatoriedad: ${Math.random()}`,
         },
       ],
       model: MODEL,

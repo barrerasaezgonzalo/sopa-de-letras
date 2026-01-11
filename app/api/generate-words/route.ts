@@ -21,16 +21,24 @@ export async function POST(req: NextRequest) {
       messages: [
         {
           role: "system",
-          content:
-            "Eres un asistente que genera exactamente 10 palabras relacionadas con un tema. Solo responde con palabras separadas por comas.",
+          content: `Eres un generador de vocabulario especializado en juegos de lógica. 
+          Tu objetivo es proporcionar palabras para una sopa de letras desafiante.
+          
+          REGLAS ESTRICTAS:
+          1. Genera exactamente 10 palabras.
+          2. Las palabras deben tener entre 4 y 12 caracteres.
+          3. Evita términos ultra-genéricos; busca sustantivos interesantes o términos técnicos.
+          4. NO uses tildes ni caracteres especiales (ñ, á, é, etc.) para evitar bugs en la cuadrícula.
+          5. No incluyas explicaciones, solo las palabras separadas por comas.
+          6. CRUCIAL: Introduce variedad semántica. Si el tema es común, busca términos menos frecuentes.`,
         },
         {
           role: "user",
-          content: `Tema: "${topic}". Genera 10 palabras relacionadas.`,
+          content: `Tema: "${topic}". Genera 10 palabras únicas y variadas. Semilla de aleatoriedad: ${Math.random()}`,
         },
       ],
       model: MODEL,
-      temperature: 0.7,
+      temperature: 0.9,
       max_tokens: 100,
     });
 
